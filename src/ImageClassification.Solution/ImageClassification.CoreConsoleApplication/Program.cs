@@ -44,6 +44,8 @@ namespace ImageClassification.CoreConsoleApplication
                     .Fit(shuffledData)
                     .Transform(shuffledData);
 
+            var preProcessedDataPreview = preProcessedData.Preview();
+
             TrainTestData trainSplit = mlContext.Data.TrainTestSplit(data: preProcessedData, testFraction: 0.3);
             TrainTestData validationTestSplit = mlContext.Data.TrainTestSplit(trainSplit.TestSet);
 
@@ -64,8 +66,10 @@ namespace ImageClassification.CoreConsoleApplication
                 Arch = ImageClassificationTrainer.Architecture.ResnetV2101,
                 MetricsCallback = (metrics) => Console.WriteLine(metrics),
                 TestOnTrainSet = false,
-                ReuseTrainSetBottleneckCachedValues = true,
-                ReuseValidationSetBottleneckCachedValues = true
+                //ReuseTrainSetBottleneckCachedValues = true,
+                //ReuseValidationSetBottleneckCachedValues = true
+                ReuseTrainSetBottleneckCachedValues = false,
+                ReuseValidationSetBottleneckCachedValues = false
             };
 
             var trainingPipeline = mlContext.MulticlassClassification.Trainers.ImageClassification(classifierOptions)
