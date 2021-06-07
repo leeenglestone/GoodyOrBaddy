@@ -13,21 +13,29 @@ namespace ImageClassification.CoreConsoleApplication
         // https://docs.microsoft.com/en-us/dotnet/machine-learning/tutorials/image-classification-api-transfer-learning
 
         static MLContext mlContext;
+        static readonly string trainedModelPath = @"C:\Temp\model.zip";
 
         static void Main(string[] args)
         {
             //CleaningHelper.RenameImages();
             //CleaningHelper.RemoveCopiedFiles();
 
-            Process();
+            CreateModel();
+
+            ClassifyImageUsingModel(@"C:\temp\baddy1.jpg", trainedModelPath, "bad");
+            ClassifyImageUsingModel(@"C:\temp\baddy2.jpg", trainedModelPath, "bad");
+            ClassifyImageUsingModel(@"C:\temp\baddy3.jpg", trainedModelPath, "bad");
+
+            ClassifyImageUsingModel(@"C:\temp\goody1.jpg", trainedModelPath, "good");
+            ClassifyImageUsingModel(@"C:\temp\goody2.jpg", trainedModelPath, "good");
+            ClassifyImageUsingModel(@"C:\temp\goody3.jpg", trainedModelPath, "good");
 
             Console.ReadKey();
         }
 
-        private static void Process()
+        private static void CreateModel()
         {
-            //var projectDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../"));
-            var workspaceRelativePath = @"C:\Development\GoodyOrBaddy\workspace";// Path.Combine(projectDirectory, "workspace");
+            //var workspaceRelativePath = @"C:\Development\GoodyOrBaddy\workspace";// Path.Combine(projectDirectory, "workspace");
             //var assetsRelativePath = Path.Combine(projectDirectory, "images\\training");
 
             var assetsRelativePath = @"C:\Development\GoodyOrBaddy\images\training";
@@ -67,11 +75,10 @@ namespace ImageClassification.CoreConsoleApplication
             //var validationSetPreview = validationSet.Preview();
 
             IDataView testSet = validationTestSplit.TestSet;
-            //var testSetPreview = testSet.Preview(); // Empty??
+            //var testSetPreview = testSet.Preview(); // Empty when there aren't sufficient images
 
             var classifierOptions = new ImageClassificationTrainer.Options()
             {
-                //Epoch = 500,
                 //WorkspacePath = workspaceRelativePath,
                 FeatureColumnName = "Image",
                 LabelColumnName = "LabelAsKey",
@@ -88,26 +95,26 @@ namespace ImageClassification.CoreConsoleApplication
 
             ITransformer trainedModel = trainingPipeline.Fit(trainSet);
 
-            //mlContext.Model.Save(trainedModel, trainSet.Schema, @"C:\Temp\model.zip");
+            //mlContext.Model.Save(trainedModel, trainSet.Schema, trainedModelPath);
 
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\good\315be4a2-b2dc-4b32-be4b-ec3d24b0d396.jpg", @"C:\Temp\model.zip");
+            //ClassifyImageUsingModel(@"C:\temp\baddy1.jpg", trainedModelPath);
 
-            ClassifySingleImage(mlContext, testSet, trainedModel);
+            //ClassifySingleImage(mlContext, testSet, trainedModel);
 
-            //ClassifyImages(mlContext, testSet, trainedModel);
+            ClassifyImages(mlContext, testSet, trainedModel);
         }
 
-        public static void ClassifyImageUsingModel(string pathToImage, string pathToModel)
+        public static void ClassifyImageUsingModel(string pathToImage, string pathToModel, string expectedLabel)
         {
+            mlContext = new MLContext();
+
             var loadModel = mlContext.Model.Load(pathToModel, out var modelInputSchema);
             var PredictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(loadModel);
 
             ModelInput image = new ModelInput();
+            image.Label = expectedLabel;
             image.ImagePath = pathToImage;
             image.Image = File.ReadAllBytes(pathToImage);
-
-            //image.Label 
-            //;// LoadImage(pathToImage);
 
             var prediction = PredictionEngine.Predict(image);
 
