@@ -7,8 +7,12 @@ namespace ImageClassification.CoreConsoleApplication
     {
         public static void RenameImages()
         {
-            string folderPath = @"C:\Development\GoodyOrBaddy\images\training\good";
+            RenameImages(@"C:\Development\GoodyOrBaddy\images\training\good");
+            RenameImages(@"C:\Development\GoodyOrBaddy\images\training\bad");
+        }
 
+        private static void RenameImages(string folderPath)
+        {
             foreach (var filePath in Directory.GetFiles(folderPath))
             {
                 var guid = Guid.NewGuid();
@@ -21,6 +25,26 @@ namespace ImageClassification.CoreConsoleApplication
                 Console.WriteLine(newFilePath);
 
                 File.Move(filePath, newFilePath);
+            }
+        }
+
+        public static void RemoveCopiedFiles()
+        {
+            RemoveCoppiedFiles(@"C:\Development\GoodyOrBaddy\images\training\good");
+            RemoveCoppiedFiles(@"C:\Development\GoodyOrBaddy\images\training\bad");
+        }
+
+        private static void RemoveCoppiedFiles(string folderPath)
+        {
+            foreach (var filePath in Directory.GetFiles(folderPath))
+            {
+                var file = new FileInfo(filePath);
+
+                if (file.Name.ToLower().Contains("copy"))
+                {
+                    File.Delete(filePath);
+                    Console.WriteLine($"Deleting: {filePath}");
+                }
             }
         }
     }
