@@ -25,13 +25,13 @@ namespace ImageClassification.CoreConsoleApplication
             //CreateModel();
 
             // 2. Testing images from the model
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\baddy1.jpg", trainedModelPath, "bad");
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\baddy2.jpg", trainedModelPath, "bad");
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\baddy3.jpg", trainedModelPath, "bad");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy1.jpg", trainedModelPath, "bad");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy2.jpg", trainedModelPath, "bad");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy3.jpg", trainedModelPath, "bad");
             
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\goody1.jpg", trainedModelPath, "good");
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\goody2.jpg", trainedModelPath, "good");
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\goody3.jpg", trainedModelPath, "good");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody1.jpg", trainedModelPath, "good");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody2.jpg", trainedModelPath, "good");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody3.jpg", trainedModelPath, "good");
 
             Console.ReadKey();
         }
