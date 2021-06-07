@@ -25,13 +25,13 @@ namespace ImageClassification.CoreConsoleApplication
             //CreateModel();
 
             // 2. Testing images from the model
-            //ClassifyImageUsingModel(@"C:\temp\baddy1.jpg", trainedModelPath, "bad");
-            //ClassifyImageUsingModel(@"C:\temp\baddy2.jpg", trainedModelPath, "bad");
-            //ClassifyImageUsingModel(@"C:\temp\baddy3.jpg", trainedModelPath, "bad");
-
-            //ClassifyImageUsingModel(@"C:\temp\goody1.jpg", trainedModelPath, "good");
-            //ClassifyImageUsingModel(@"C:\temp\goody2.jpg", trainedModelPath, "good");
-            //ClassifyImageUsingModel(@"C:\temp\goody3.jpg", trainedModelPath, "good");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\baddy1.jpg", trainedModelPath, "bad");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\baddy2.jpg", trainedModelPath, "bad");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\baddy3.jpg", trainedModelPath, "bad");
+            
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\goody1.jpg", trainedModelPath, "good");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\goody2.jpg", trainedModelPath, "good");
+            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\training\test\goody3.jpg", trainedModelPath, "good");
 
             Console.ReadKey();
         }
