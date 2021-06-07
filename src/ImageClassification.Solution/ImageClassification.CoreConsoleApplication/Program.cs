@@ -17,27 +17,27 @@ namespace ImageClassification.CoreConsoleApplication
 
         static void Main(string[] args)
         {
-            //CleaningHelper.RenameImages();
-            //CleaningHelper.RemoveCopiedFiles();
+            // These are helper methods, you probably wont need these
+            // CleaningHelper.RenameImages(); // This makes the filenames unique
+            // CleaningHelper.RemoveCopiedFiles(); // This removes the copied files if I want
 
-            CreateModel();
+            // 1. You will need to create the model first before step 2
+            //CreateModel();
 
-            ClassifyImageUsingModel(@"C:\temp\baddy1.jpg", trainedModelPath, "bad");
-            ClassifyImageUsingModel(@"C:\temp\baddy2.jpg", trainedModelPath, "bad");
-            ClassifyImageUsingModel(@"C:\temp\baddy3.jpg", trainedModelPath, "bad");
+            // 2. Testing images from the model
+            //ClassifyImageUsingModel(@"C:\temp\baddy1.jpg", trainedModelPath, "bad");
+            //ClassifyImageUsingModel(@"C:\temp\baddy2.jpg", trainedModelPath, "bad");
+            //ClassifyImageUsingModel(@"C:\temp\baddy3.jpg", trainedModelPath, "bad");
 
-            ClassifyImageUsingModel(@"C:\temp\goody1.jpg", trainedModelPath, "good");
-            ClassifyImageUsingModel(@"C:\temp\goody2.jpg", trainedModelPath, "good");
-            ClassifyImageUsingModel(@"C:\temp\goody3.jpg", trainedModelPath, "good");
+            //ClassifyImageUsingModel(@"C:\temp\goody1.jpg", trainedModelPath, "good");
+            //ClassifyImageUsingModel(@"C:\temp\goody2.jpg", trainedModelPath, "good");
+            //ClassifyImageUsingModel(@"C:\temp\goody3.jpg", trainedModelPath, "good");
 
             Console.ReadKey();
         }
 
         private static void CreateModel()
         {
-            //var workspaceRelativePath = @"C:\Development\GoodyOrBaddy\workspace";// Path.Combine(projectDirectory, "workspace");
-            //var assetsRelativePath = Path.Combine(projectDirectory, "images\\training");
-
             var assetsRelativePath = @"C:\Development\GoodyOrBaddy\images\training";
 
             mlContext = new MLContext();
@@ -61,7 +61,7 @@ namespace ImageClassification.CoreConsoleApplication
                     .Fit(shuffledData)
                     .Transform(shuffledData);
 
-            var preProcessedDataPreview = preProcessedData.Preview(); // Is this empty?
+            var preProcessedDataPreview = preProcessedData.Preview();
 
             // https://rubikscode.net/2021/03/22/transfer-learning-and-image-classification-with-ml-net/
 
@@ -75,11 +75,10 @@ namespace ImageClassification.CoreConsoleApplication
             //var validationSetPreview = validationSet.Preview();
 
             IDataView testSet = validationTestSplit.TestSet;
-            //var testSetPreview = testSet.Preview(); // Empty when there aren't sufficient images
+            //var testSetPreview = testSet.Preview(); // Empty when there aren't sufficient images!
 
             var classifierOptions = new ImageClassificationTrainer.Options()
             {
-                //WorkspacePath = workspaceRelativePath,
                 FeatureColumnName = "Image",
                 LabelColumnName = "LabelAsKey",
                 ValidationSet = validationSet,
@@ -95,13 +94,13 @@ namespace ImageClassification.CoreConsoleApplication
 
             ITransformer trainedModel = trainingPipeline.Fit(trainSet);
 
-            //mlContext.Model.Save(trainedModel, trainSet.Schema, trainedModelPath);
+            // You can comment out this code once you have produced the model zip file
+            mlContext.Model.Save(trainedModel, trainSet.Schema, trainedModelPath);
 
-            //ClassifyImageUsingModel(@"C:\temp\baddy1.jpg", trainedModelPath);
-
+            // These methods are from the code sample I found
+            // They use the in memory model rather than the physical model file
             //ClassifySingleImage(mlContext, testSet, trainedModel);
-
-            ClassifyImages(mlContext, testSet, trainedModel);
+            //ClassifyImages(mlContext, testSet, trainedModel);
         }
 
         public static void ClassifyImageUsingModel(string pathToImage, string pathToModel, string expectedLabel)
@@ -124,8 +123,6 @@ namespace ImageClassification.CoreConsoleApplication
 
         public static void ClassifySingleImage(MLContext mlContext, IDataView data, ITransformer trainedModel)
         {
-            var dataPreview = data.Preview();
-
             PredictionEngine<ModelInput, ModelOutput> predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(trainedModel);
 
             ModelInput image = mlContext.Data.CreateEnumerable<ModelInput>(data, reuseRowObject: true).First();
