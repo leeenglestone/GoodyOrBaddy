@@ -82,19 +82,17 @@
     <script>
     // "myAwesomeDropzone" is the camelized version of the HTML element's ID
     Dropzone.options.myAwesomeDropzone = {
-        url: "http://localhost:7071/api/Function1", // works?
+        url: "https://goodyorbaddyfunction.azurewebsites.net/api/Function1",
         paramName: "file", // The name that will be used to transfer the file
         maxFilesize: 2,
         init: function () {
             this.on("addedfile", function (file) {
-                //alert("Added file.");
+                
                 $('#goodyMessage').hide();
                 $('#baddyMessage').hide();
             }),
             this.on("success", function (file, response) {
-                //alert(response);
-
-
+                
                 if (response === "good") {
                     $('#goodyMessage').show();
                 }
