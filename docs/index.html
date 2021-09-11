@@ -1,0 +1,112 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/dropzone.css" />
+    <link rel="stylesheet" href="/css/basic.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" href="/">GoodyOrBaddy.com (In Development)</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/">Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+
+            <div class="text-center">
+                <h1 class="display-4">Goody or Baddy?</h1>
+                <p>
+                    This Dropzone.js sends the image to an Azure Function that runs it through an ML.NET image classification machine learning model I trained with datasets of good and bad cartoon characters.
+                </p>
+                <p>Follow me on Twitter (@LeeEnglestone) for more information.</p>
+
+                <div id="dropzone" style="margin-top:30px;">
+                    <form action="/" class="dropzone" id="myAwesomeDropzone">
+
+                        <div class="dz-message">
+                            <button type="button" class="dz-button">Drop your cartoon character image here.</button><br />
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <br />
+                <br />
+                <div id="goodyMessage" class="alert alert-success" role="alert" style="display:none">
+                    Goody!
+                </div>
+
+                <div id="baddyMessage" class="alert alert-danger" role="alert" style="display:none">
+                    Baddy!
+                </div>
+
+            </div>
+
+
+
+
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - GoodyOrBaddy.com
+        </div>
+    </footer>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0"></script>
+    <script src="/js/dropzone.js"></script>
+
+
+    <script>
+    // "myAwesomeDropzone" is the camelized version of the HTML element's ID
+    Dropzone.options.myAwesomeDropzone = {
+        url: "http://localhost:7071/api/Function1", // works?
+        paramName: "file", // The name that will be used to transfer the file
+        maxFilesize: 2,
+        init: function () {
+            this.on("addedfile", function (file) {
+                //alert("Added file.");
+                $('#goodyMessage').hide();
+                $('#baddyMessage').hide();
+            }),
+            this.on("success", function (file, response) {
+                //alert(response);
+
+
+                if (response === "good") {
+                    $('#goodyMessage').show();
+                }
+                else if(response === "bad") {
+                    $('#baddyMessage').show();
+                }
+
+            })
+        }
+    };
+
+    </script>
+    
+</body>
+</html>

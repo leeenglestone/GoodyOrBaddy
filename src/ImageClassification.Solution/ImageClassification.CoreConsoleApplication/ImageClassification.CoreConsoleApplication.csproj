@@ -16,4 +16,8 @@
     <Folder Include="NewFolder\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ImageClassification.Library\ImageClassification.Library.csproj" />
+  </ItemGroup>
+
 </Project>

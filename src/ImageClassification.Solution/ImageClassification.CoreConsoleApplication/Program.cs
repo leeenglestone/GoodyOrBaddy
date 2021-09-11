@@ -5,6 +5,7 @@ using System.IO;
 using Microsoft.ML;
 using static Microsoft.ML.DataOperationsCatalog;
 using Microsoft.ML.Vision;
+using ImageClassification.Library;
 
 namespace ImageClassification.CoreConsoleApplication
 {
@@ -25,13 +26,13 @@ namespace ImageClassification.CoreConsoleApplication
             //CreateModel();
 
             // 2. Testing images from the model
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy1.jpg", trainedModelPath, "bad");
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy2.jpg", trainedModelPath, "bad");
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy3.jpg", trainedModelPath, "bad");
+            ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy1.jpg", trainedModelPath, "bad");
+            ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy2.jpg", trainedModelPath, "bad");
+            ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy3.jpg", trainedModelPath, "bad");
             
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody1.jpg", trainedModelPath, "good");
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody2.jpg", trainedModelPath, "good");
-            //ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody3.jpg", trainedModelPath, "good");
+            ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody1.jpg", trainedModelPath, "good");
+            ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody2.jpg", trainedModelPath, "good");
+            ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody3.jpg", trainedModelPath, "good");
 
             Console.ReadKey();
         }
@@ -220,24 +221,24 @@ namespace ImageClassification.CoreConsoleApplication
         }
     }
 
-    public class ImageData
-    {
-        public string ImagePath { get; set; }
-        public string Label { get; set; }
-    }
+    //public class ImageData
+    //{
+    //    public string ImagePath { get; set; }
+    //    public string Label { get; set; }
+    //}
 
-    public class ModelInput
-    {
-        public byte[] Image { get; set; }
-        public UInt32 LabelAsKey { get; set; }
-        public string ImagePath { get; set; }
-        public string Label { get; set; }
-    }
+    //public class ModelInput
+    //{
+    //    public byte[] Image { get; set; }
+    //    public UInt32 LabelAsKey { get; set; }
+    //    public string ImagePath { get; set; }
+    //    public string Label { get; set; }
+    //}
 
-    public class ModelOutput
-    {
-        public string ImagePath { get; set; }
-        public string Label { get; set; }
-        public string PredictedLabel { get; set; }
-    }
+    //public class ModelOutput
+    //{
+    //    public string ImagePath { get; set; }
+    //    public string Label { get; set; }
+    //    public string PredictedLabel { get; set; }
+    //}
 }
