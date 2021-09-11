@@ -1,22 +1,31 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
+    <title>GoodyOrBaddy.com</title>
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/site.css" />
     <link rel="stylesheet" href="/css/dropzone.css" />
     <link rel="stylesheet" href="/css/basic.css" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR88E56D8P"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-DR88E56D8P');
+    </script>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" href="/">GoodyOrBaddy.com (In Development)</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="/">GoodyOrBaddy.com</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
@@ -35,15 +44,18 @@
             <div class="text-center">
                 <h1 class="display-4">Goody or Baddy?</h1>
                 <p>
-                    This Dropzone.js sends the image to an Azure Function that runs it through an ML.NET image classification machine learning model I trained with datasets of good and bad cartoon characters.
+                    This Dropzone.js sends the image to an Azure Function that runs it through an ML.NET image
+                    classification machine learning model I trained with datasets of good and bad cartoon characters.
                 </p>
-                <p>Follow me on Twitter (@LeeEnglestone) for more information.</p>
+                <p>Follow me on Twitter (<a href="https://twitter.com/LeeEnglestone">@LeeEnglestone</a>) for more
+                    information.</p>
 
                 <div id="dropzone" style="margin-top:30px;">
                     <form action="/" class="dropzone" id="myAwesomeDropzone">
 
                         <div class="dz-message">
-                            <button type="button" class="dz-button">Drop your cartoon character image here.</button><br />
+                            <button type="button" class="dz-button">Drop your cartoon character image file
+                                here.</button><br />
                         </div>
 
                     </form>
@@ -60,10 +72,39 @@
                     Baddy!
                 </div>
 
+                <div class="images">
+
+                    <div class="image-group">
+                        <img src="images/good1.jpg" alt="Goody 1" />
+                        <img src="images/good2.jpg" alt="Goody 2" />
+                        <img src="images/good3.jpg" alt="Goody 3" />
+                        <img src="images/good4.jpg" alt="Goody 4" />
+                        <img src="images/good5.jpg" alt="Goody 5" />
+                        <img src="images/good6.jpg" alt="Goody 6" />
+                        <img src="images/good7.jpg" alt="Goody 7" />
+                        <img src="images/good8.jpg" alt="Goody 8" />
+                    </div>
+
+                    <div class="image-group">
+                        <img src="images/bad1.jpg" alt="Baddy 1" />
+                        <img src="images/bad2.jpg" alt="Baddy 2" />
+                        <img src="images/bad3.jpg" alt="Baddy 3" />
+                        <img src="images/bad4.jpg" alt="Baddy 4" />
+                        <img src="images/bad5.jpg" alt="Baddy 5" />
+                        <img src="images/bad6.jpg" alt="Baddy 6" />
+                        <img src="images/bad7.jpg" alt="Baddy 7" />
+                        <img src="images/bad8.jpg" alt="Baddy 8" />
+                    </div>
+
+                </div>
+
+                <br />
+                <p>The code is available on GitHub at <a href="https://github.com/leeenglestone/GoodyOrBaddy">https://github.com/leeenglestone/GoodyOrBaddy</a></p>
+
+
             </div>
 
-
-
+            
 
         </main>
     </div>
@@ -80,31 +121,32 @@
 
 
     <script>
-    // "myAwesomeDropzone" is the camelized version of the HTML element's ID
-    Dropzone.options.myAwesomeDropzone = {
-        url: "https://goodyorbaddyfunction.azurewebsites.net/api/Function1",
-        paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 2,
-        init: function () {
-            this.on("addedfile", function (file) {
-                
-                $('#goodyMessage').hide();
-                $('#baddyMessage').hide();
-            }),
-            this.on("success", function (file, response) {
-                
-                if (response === "good") {
-                    $('#goodyMessage').show();
-                }
-                else if(response === "bad") {
-                    $('#baddyMessage').show();
-                }
+        // "myAwesomeDropzone" is the camelized version of the HTML element's ID
+        Dropzone.options.myAwesomeDropzone = {
+            url: "https://goodyorbaddyfunction.azurewebsites.net/api/Function1",
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 2,
+            init: function () {
+                this.on("addedfile", function (file) {
 
-            })
-        }
-    };
+                    $('#goodyMessage').hide();
+                    $('#baddyMessage').hide();
+                }),
+                    this.on("success", function (file, response) {
+
+                        if (response === "good") {
+                            $('#goodyMessage').show();
+                        }
+                        else if (response === "bad") {
+                            $('#baddyMessage').show();
+                        }
+
+                    })
+            }
+        };
 
     </script>
-    
+
 </body>
+
 </html>
