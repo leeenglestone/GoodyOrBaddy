@@ -14,7 +14,7 @@ namespace ImageClassification.CoreConsoleApplication
         // https://docs.microsoft.com/en-us/dotnet/machine-learning/tutorials/image-classification-api-transfer-learning
 
         static MLContext mlContext;
-        static readonly string trainedModelPath = @"C:\Temp\model.zip";
+        static readonly string trainedModelPath = @"C:\Temp\model-v1.zip";
 
         static void Main(string[] args)
         {
@@ -29,7 +29,7 @@ namespace ImageClassification.CoreConsoleApplication
             ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy1.jpg", trainedModelPath, "bad");
             ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy2.jpg", trainedModelPath, "bad");
             ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\baddy3.jpg", trainedModelPath, "bad");
-            
+
             ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody1.jpg", trainedModelPath, "good");
             ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody2.jpg", trainedModelPath, "good");
             ClassifyImageUsingModel(@"C:\Development\GoodyOrBaddy\images\test\goody3.jpg", trainedModelPath, "good");
@@ -70,13 +70,8 @@ namespace ImageClassification.CoreConsoleApplication
             TrainTestData validationTestSplit = mlContext.Data.TrainTestSplit(trainSplit.TestSet);
 
             IDataView trainSet = trainSplit.TrainSet;
-            //var trainSetPreview = trainSet.Preview();
-
             IDataView validationSet = validationTestSplit.TrainSet;
-            //var validationSetPreview = validationSet.Preview();
-
             IDataView testSet = validationTestSplit.TestSet;
-            //var testSetPreview = testSet.Preview(); // Empty when there aren't sufficient images!
 
             var classifierOptions = new ImageClassificationTrainer.Options()
             {
@@ -127,7 +122,6 @@ namespace ImageClassification.CoreConsoleApplication
             PredictionEngine<ModelInput, ModelOutput> predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(trainedModel);
 
             ModelInput image = mlContext.Data.CreateEnumerable<ModelInput>(data, reuseRowObject: true).First();
-
             ModelOutput prediction = predictionEngine.Predict(image);
 
             Console.WriteLine("Classifying single image");
@@ -158,7 +152,9 @@ namespace ImageClassification.CoreConsoleApplication
             var label = Path.GetFileName(file);
 
             if (useFolderNameAsLabel)
+            {
                 label = Directory.GetParent(file).Name;
+            }
             else
             {
                 for (int index = 0; index < label.Length; index++)
@@ -209,36 +205,9 @@ namespace ImageClassification.CoreConsoleApplication
 
                 images.Add(new ImageData() { Label = label, ImagePath = file });
 
-                //yield return new ImageData()
-                //{
-                //    ImagePath = file,
-                //    Label = label
-                //};
             }
 
             return images.AsEnumerable();
-
         }
     }
-
-    //public class ImageData
-    //{
-    //    public string ImagePath { get; set; }
-    //    public string Label { get; set; }
-    //}
-
-    //public class ModelInput
-    //{
-    //    public byte[] Image { get; set; }
-    //    public UInt32 LabelAsKey { get; set; }
-    //    public string ImagePath { get; set; }
-    //    public string Label { get; set; }
-    //}
-
-    //public class ModelOutput
-    //{
-    //    public string ImagePath { get; set; }
-    //    public string Label { get; set; }
-    //    public string PredictedLabel { get; set; }
-    //}
 }
