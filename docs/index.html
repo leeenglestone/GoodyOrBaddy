@@ -64,6 +64,11 @@
 
                 <br />
                 <br />
+
+                <div id="processingMessage" class="alert alert-warning" role="alert" style="display: none">
+                    Analysing image..
+                </div>
+
                 <div id="goodyMessage" class="alert alert-success" role="alert" style="display:none">
                     Goody!
                 </div>
@@ -159,19 +164,21 @@
             init: function () {
                 this.on("addedfile", function (file) {
 
+                    $('#processingMessage').fadeIn();
                     $('#goodyMessage').hide();
                     $('#baddyMessage').hide();
                 }),
-                    this.on("success", function (file, response) {
+                this.on("success", function (file, response) {
 
-                        if (response === "good") {
-                            $('#goodyMessage').show();
-                        }
-                        else if (response === "bad") {
-                            $('#baddyMessage').show();
-                        }
+                    $('#processingMessage').hide();
 
-                    })
+                    if (response === "good") {
+                        $('#goodyMessage').fadeIn();
+                    }
+                    else if (response === "bad") {
+                        $('#baddyMessage').fadeIn();
+                    }
+                })
             }
         };
 
