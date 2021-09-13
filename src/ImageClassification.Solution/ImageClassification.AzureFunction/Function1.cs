@@ -34,18 +34,8 @@ namespace ImageClassification.AzureFunction
                     fileBytes = memoryStream.ToArray();
                 }
 
-                MLContext mlContext = new MLContext();
-                var model = mlContext.Model.Load(pathToModel, out var modelInputSchema);
-
-                var PredictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(model);
-
-                ModelInput image = new ModelInput();
-                image.Label = "<Expected Label>"; // Not really using this
-                image.ImagePath = fileName;
-                image.Image = fileBytes;
-
-                var prediction = PredictionEngine.Predict(image);
-                var predictedLabel = prediction.PredictedLabel;
+                ImageClassifier imageClassifier = new ImageClassifier(pathToModel);
+                string predictedLabel = imageClassifier.ClassifyImage(fileBytes);
 
                 return new OkObjectResult(predictedLabel);
             }
