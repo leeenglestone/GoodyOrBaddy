@@ -52,3 +52,6 @@ A simple class library that stores some POCO classes that are used by the Azure 
 
 ### ImageClassification.CoreConsoleApplication
 This Console Application creates the image classification model.
+
+### ImageClassification.UnitTests
+XUnit project started to test the expected classification results of some good and bad images.
